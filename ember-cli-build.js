@@ -6,8 +6,17 @@ module.exports = async function (defaults) {
   const { setConfig } = await import('@warp-drive/build-config');
 
   const app = new EmberApp(defaults, {
+    'ember-fetch': {
+      preferNative: true,
+      nativePromise: true,
+    },
     'ember-simple-auth': {
       useSessionSetupMethod: true,
+    },
+    babel: {
+      plugins: [
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+      ],
     },
   });
 
@@ -25,7 +34,6 @@ module.exports = async function (defaults) {
     staticModifiers: true,
     staticComponents: true,
     staticEmberSource: true,
-    splitAtRoutes: ['mock-login'],
     skipBabel: [
       {
         package: 'qunit',
