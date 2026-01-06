@@ -15,5 +15,11 @@ Router.map(function () {
     this.route('logout');
     this.route('callback');
   });
+
+  this.route('legaal', function () {
+    this.route('disclaimer');
+    this.route('cookieverklaring');
+    this.route('toegankelijkheidsverklaring');
+  });
   this.route('mock-login');
 });
