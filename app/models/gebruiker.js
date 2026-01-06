@@ -7,15 +7,15 @@ export default class GebruikerModel extends Model {
 
   @hasMany('account', { async: false, inverse: 'gebruiker' }) account;
 
-  @hasMany('organisation', {
+  @hasMany('organization', {
     async: false,
     inverse: null,
     polymorphic: true,
   })
-  organisations;
+  organizations;
 
   get group() {
-    return this.organisations.at(0);
+    return this.organizations.at(0);
   }
 
   // used for mock login
