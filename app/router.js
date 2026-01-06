@@ -16,6 +16,8 @@ Router.map(function () {
     this.route('callback');
   });
 
+  this.route('loading');
+
   this.route('legaal', function () {
     this.route('disclaimer');
     this.route('cookieverklaring');
