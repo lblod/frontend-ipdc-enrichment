@@ -1,3 +1,5 @@
+/* eslint-disable ember/no-new-mixins */
+/* eslint-disable ember/no-mixins */
 import EmberObject from '@ember/object';
 import EmberDataTableSerializerMixin from 'frontend-ipdc-enrichment/mixins/ember-data-table/serializer';
 import { module, test } from 'qunit';
