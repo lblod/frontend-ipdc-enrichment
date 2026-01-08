@@ -14,7 +14,7 @@ module('Unit | Serializer | application', function (hooks) {
 
   test('it serializes records', function (assert) {
     const store = this.owner.lookup('service:store');
-    const record = store.createRecord('application', {});
+    const record = store.createRecord('account', {});
 
     const serializedRecord = record.serialize();
 

@@ -12,15 +12,8 @@ module('Integration | Component | footer-heading', function (hooks) {
 
     await render(hbs`<FooterHeading />`);
 
-    assert.dom().hasText('');
-
-    // Template block usage:
-    await render(hbs`
-      <FooterHeading>
-        template block text
-      </FooterHeading>
-    `);
-
-    assert.dom().hasText('template block text');
+    assert
+      .dom()
+      .hasText('localhost is een officiële website van de Vlaamse overheid');
   });
 });

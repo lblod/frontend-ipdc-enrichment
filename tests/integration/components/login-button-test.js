@@ -12,15 +12,6 @@ module('Integration | Component | login-button', function (hooks) {
 
     await render(hbs`<LoginButton />`);
 
-    assert.dom().hasText('');
-
-    // Template block usage:
-    await render(hbs`
-      <LoginButton>
-        template block text
-      </LoginButton>
-    `);
-
-    assert.dom().hasText('template block text');
+    assert.dom().hasText('Aanmelden');
   });
 });

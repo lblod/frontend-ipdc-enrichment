@@ -12,15 +12,6 @@ module('Integration | Component | page-loader', function (hooks) {
 
     await render(hbs`<PageLoader />`);
 
-    assert.dom().hasText('');
-
-    // Template block usage:
-    await render(hbs`
-      <PageLoader>
-        template block text
-      </PageLoader>
-    `);
-
-    assert.dom().hasText('template block text');
+    assert.dom().hasText('Aan het laden');
   });
 });
