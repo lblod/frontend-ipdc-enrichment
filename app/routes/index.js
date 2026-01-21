@@ -10,10 +10,9 @@ export default class IndexRoute extends Route {
   }
 
   async model() {
-    const form = await this.semanticFormRepository.getFormDefinition(
-      "contactpunt"
-    );
+    const form =
+      await this.semanticFormRepository.getFormDefinition('contactpunt');
     console.log(form);
-    return form
+    return form;
   }
 }
