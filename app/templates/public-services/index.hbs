@@ -1,0 +1,97 @@
+<AuToolbar @size="medium" as |Group|>
+    <Group>
+    <AuHeading @skin="2">
+        Lokale Producten- en Dienstencatalogus
+    </AuHeading>
+    </Group>
+    <Group class="au-u-flex au-u-flex--vertical-center">
+    <AuLink
+        @route="index"
+        @icon="add"
+        @iconAlignment="left"
+        @skin="button"
+    >
+        Product of dienst toevoegen
+    </AuLink>
+    </Group>
+</AuToolbar>
+
+<AuDataTable
+    @content={{this.model}}
+    @sort={{this.sort}}
+    @page={{this.page}}
+    @size={{20}}
+    as |Table|
+>
+    <Table.content as |Content|>
+    <Content.header>
+        <th>
+            Productnaam
+        </th>
+        <th>
+            IPDC Concept ID
+        </th>
+        <th>
+            Producttype
+        </th>
+        <th>
+            Doelgroepen
+        </th>
+        <th>
+            Thema's
+        </th>
+        <th>
+            Publicatiekanaal
+        </th>
+        <th>
+            Laatst bewerkt
+        </th>
+        <th>
+            Status
+        </th>
+    </Content.header>
+
+    <Content.body as |publicService|>
+        <td>
+            {{publicService.name.[0].content}}
+        </td>
+        <td>
+            {{publicService.productId}}
+        </td>
+        <td>{{publicService.type.label}}</td>
+        <td>
+            <PillList @list={{publicService.targetAudiencesOrderedOnLabel}} as |targetAudience|>
+            <AuPill>
+                {{targetAudience.label}}
+            </AuPill>
+            </PillList>
+        </td>
+        <td>
+            <PillList @list={{publicService.thematicAreasOrderedOnLabel}} as |thematicArea|>
+            <AuPill>
+                {{thematicArea.label}}
+            </AuPill>
+            </PillList>
+        </td>
+        <td>
+            <PillList @list={{publicService.publicationMediaOrderedOnLabel}} as |publicationMedium|>
+            <AuPill>
+                {{publicationMedium.label}}
+            </AuPill>
+            </PillList>
+        </td>
+        <td>
+            {{moment-format publicService.dateModified "DD-MM-YYYY - HH:mm"}}
+        </td>
+        <td>
+            {{#if publicService.status.uri}}
+            <Status @uri={{publicService.status.uri}}>
+                {{publicService.status.label}}
+            </Status>
+            {{else}}
+            –
+            {{/if}}
+        </td>
+        </Content.body>
+    </Table.content>
+</AuDataTable>
