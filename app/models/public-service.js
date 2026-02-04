@@ -5,6 +5,7 @@ export default class PublicServiceModel extends Model {
   @attr uri;
   @attr productId;
   @attr name;
+  @attr description;
   @attr startDate;
   @attr endDate;
   @attr dateCreated;
