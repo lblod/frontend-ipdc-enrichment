@@ -3,9 +3,11 @@ import { service } from '@ember/service';
 
 export default class IndexRoute extends Route {
   @service session;
+  @service router;
   @service semanticFormRepository;
 
   beforeModel(transition) {
+    this.router.replaceWith('public-services.index');
     this.session.requireAuthentication(transition, 'login');
   }
 
