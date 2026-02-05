@@ -21,6 +21,12 @@ export default class PublicServiceModel extends Model {
   })
   type;
 
+  @belongsTo('bestuurseenheid-classificatie-code', {
+    async: false,
+    inverse: null,
+  })
+  relevantAdministrativeUnits;
+
   @belongsTo('concept', {
     async: false,
     inverse: null,
