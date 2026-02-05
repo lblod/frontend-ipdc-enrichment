@@ -89,6 +89,14 @@
   border-bottom: 1px solid var(--au-gray-200);
 }
 
+.head-styling {
+  box-shadow: 0 0 12px rgba(33, 35, 38, 0);
+  border-bottom: 0.1rem solid var(--au-gray-200);
+  border-radius: 0;
+  background-color: var(--au-gray-100);
+  padding: 1.8rem;
+}
+
 .c-main-search-container{
   display: flex;
   flex-direction: column;
