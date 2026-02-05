@@ -2,7 +2,8 @@
 <AuCard {{on "click" this.handleClick}} @size="small" class="c-overview-card c-overview-card--link" as |card|>
   <card.header>
     <div class="c-overview-card__header">
-      <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny">
+      <div class="au-u-flex au-u-flex--spaced-tiny">
+        <AuBadge @skin={{this.badgeSkin}} @icon={{this.icon}} @size="small"/>
         <div
           class="au-u-h6 au-u-medium c-overview-card__link"
           title={{get @model.name "0.content"}}

@@ -5,6 +5,20 @@ import { service } from '@ember/service';
 export default class IpdcServiceCardComponent extends Component {
   @service router;
 
+  get badgeSkin() {
+    if (this.args.model.relevantAdministrativeUnits) {
+      return 'success';
+    } else {
+      return 'grey';
+    }
+  }
+
+  get icon() {
+    if (this.args.model.relevantAdministrativeUnits) {
+      return 'check';
+    }
+  }
+
   @action
   handleClick(e) {
     this.router.transitionTo('public-services.edit', this.args.model.id);
