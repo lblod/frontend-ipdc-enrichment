@@ -24,4 +24,5 @@ Router.map(function () {
     this.route('toegankelijkheidsverklaring');
   });
   this.route('mock-login');
+  this.route('public-services', function () {});
 });
