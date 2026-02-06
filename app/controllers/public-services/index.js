@@ -27,9 +27,6 @@ export default class PublicServicesIndexController extends Controller {
     { label: 'Oudste', value: 'date-created' },
   ];
 
-  
-  @tracked searchTermBuffer;
-
   @action
   updateSearchTermBuffer(event) {
     this.searchTermBuffer = event.target.value;

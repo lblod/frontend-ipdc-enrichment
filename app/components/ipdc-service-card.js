@@ -16,11 +16,13 @@ export default class IpdcServiceCardComponent extends Component {
   get icon() {
     if (this.args.model.relevantAdministrativeUnits) {
       return 'check';
+    } else {
+      return '';
     }
   }
 
   @action
-  handleClick(e) {
+  handleClick() {
     this.router.transitionTo('public-services.edit', this.args.model.id);
   }
 }
