@@ -1,3 +1,9 @@
 import Route from '@ember/routing/route';
+import { service } from '@ember/service';
+export default class LoginRoute extends Route {
+  @service session;
 
-export default class LoginRoute extends Route {}
+  beforeModel(transition) {
+    this.session.prohibitAuthentication(transition, 'public-services.index');
+  }
+}
