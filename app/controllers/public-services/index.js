@@ -2,7 +2,6 @@ import Controller from '@ember/controller';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { isEmpty } from '@ember/utils';
 import constants from 'frontend-ipdc-enrichment/config/constants';
 
 const { CONCEPT_SCHEMES } = constants;

@@ -1,5 +1,3 @@
-import { action } from '@ember/object';
-import { sort } from '@ember/object/computed';
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
