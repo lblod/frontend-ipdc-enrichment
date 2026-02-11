@@ -13,7 +13,7 @@ export default class IndexRoute extends Route {
 
   async model() {
     const form =
-      await this.semanticFormRepository.getFormDefinition('contactpunt');
+      await this.semanticFormRepository.getFormDefinition('public-service');
     return form;
   }
 }

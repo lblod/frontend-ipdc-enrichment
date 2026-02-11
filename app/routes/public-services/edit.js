@@ -11,7 +11,7 @@ export default class PublicServicesEditRoute extends Route {
       params.id,
     );
     const form =
-      await this.semanticFormRepository.getFormDefinition('contactpunt');
+      await this.semanticFormRepository.getFormDefinition('public-service');
     return { publicService, form };
   }
 }
