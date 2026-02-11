@@ -1,0 +1,37 @@
+{{page-title "Public service"}}
+
+<AuMainContainer as |m|>
+    <m.content>
+      <AuBodyContainer>
+        <AuToolbar @border="top" class="head-styling" @skin="tint" as |Group|>
+          <Group class="au-u-flex au-u-flex--column">
+            <div class="au-u-medium">Producten en diensten</div>
+            <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny ">
+              <AuBadge @skin={{this.badgeSkin}} @icon={{this.icon}} @size="small"/>
+              <h2 class="au-u-h2">{{get this.model.publicService.name "0.content"}}</h2>
+            </div>
+            <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
+          </Group>
+          <Group class="au-u-flex au-u-flex--vertical-center">
+            <AuLink
+              @route="public-services.index"
+              @skin="button-secondary"
+              @icon="chevron-left"
+            > Terug naar overzicht </AuLink>
+          </Group>
+        </AuToolbar>
+         <AuBodyContainer>
+          <div class="au-c-main-container au-u-padding au-u-flex--column">
+            <div class="au-c-main-container__content au-c-main-container__content--scroll">
+              <SemanticForms::Instance
+                @instanceId={{this.model.publicService.id}}
+                @form={{this.model.form}}
+              />
+            </div>
+          </div>
+        </AuBodyContainer>
+      </AuBodyContainer>
+    </m.content>
+  </AuMainContainer>
+
+{{outlet}}

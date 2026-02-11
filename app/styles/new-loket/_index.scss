@@ -1,0 +1,21 @@
+// We use a new-loket wrapper class so we can conditionally enable the styles without having to change the build system.
+// This does have the side-effect that some styles become more specific and override things they normally wouldn't.
+// This _should_ only affect the _overrides.scss styles, so we use a different parent class that we only use on the new loket pages, to limit the conflicts.
+@import "home";
+@import "landing";
+@import "login";
+@import "header";
+@import "navigation";
+@import "footer";
+@import "layout";
+@import "complex-link";
+@import "timeline";
+@import "rich-link";
+@import "select";
+@import "overrides";
+
+:root {
+  --brand-color: #1c7074;
+}
+
+
