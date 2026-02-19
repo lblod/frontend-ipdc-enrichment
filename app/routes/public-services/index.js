@@ -15,6 +15,9 @@ export default class PublicServicesIndexRoute extends Route {
     sort: {
       refreshModel: true,
     },
+    doelgroep: {
+      refreshModel: true,
+    },
     searchTerm: {
       refreshModel: true,
     },
@@ -35,7 +38,7 @@ export default class PublicServicesIndexRoute extends Route {
         },
         'executing-authority-levels': {
           ':id:': '75e3398e-7a87-48eb-af5f-f0bc81a6a5a4',
-        },
+        }
       },
       page: { size: params.size, number: params.page },
       sort: params.sort,
@@ -44,7 +47,14 @@ export default class PublicServicesIndexRoute extends Route {
     if (params.searchTerm) {
       query.filter.name = params.searchTerm;
     }
-
+    if (params.doelgroep !== undefined && params.doelgroep !== '') {
+      if (params.doelgroep === 'true') {
+        query.filter[':has:relevant-administrative-units'] = true;
+      } else if (params.doelgroep === 'false') {
+        query.filter[':has-no:relevant-administrative-units'] = true;
+      }
+    }
+    
     return this.store.query('public-service', query);
   }
 

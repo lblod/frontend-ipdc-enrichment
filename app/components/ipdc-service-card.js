@@ -6,7 +6,7 @@ export default class IpdcServiceCardComponent extends Component {
   @service router;
 
   get badgeSkin() {
-    if (this.args.model?.relevantAdministrativeUnits) {
+    if (this.args.model?.relevantAdministrativeUnits?.length) {
       return 'success';
     } else {
       return 'grey';
@@ -14,7 +14,7 @@ export default class IpdcServiceCardComponent extends Component {
   }
 
   get icon() {
-    if (this.args.model?.relevantAdministrativeUnits) {
+    if (this.args.model?.relevantAdministrativeUnits?.length) {
       return 'check';
     } else {
       return '';
