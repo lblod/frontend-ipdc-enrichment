@@ -21,8 +21,8 @@ export default class PublicServiceModel extends Model {
   })
   type;
 
-  @belongsTo('bestuurseenheid-classificatie-code', {
-    async: false,
+  @hasMany('bestuurseenheid-classificatie-code', {
+    async: true,
     inverse: null,
   })
   relevantAdministrativeUnits;

@@ -11,11 +11,12 @@ export default class PublicServicesIndexController extends Controller {
 
   @tracked searchTerm;
   @tracked searchTermBuffer;
+  @tracked doelgroep;
   @tracked page = 0;
   @tracked size = 25;
   @tracked sort = '-date-created';
 
-  queryParams = ['page', 'size', 'sort', 'searchTerm'];
+  queryParams = ['page', 'size', 'sort', 'searchTerm', 'doelgroep'];
 
   serviceTypeConceptScheme = CONCEPT_SCHEMES.SERVICE_TYPE_FILTER;
   themeConceptScheme = CONCEPT_SCHEMES.THEME_FILTER;
@@ -25,6 +26,12 @@ export default class PublicServicesIndexController extends Controller {
     { label: 'Relevantie', value: '' },
     { label: 'Nieuwste', value: '-date-created' },
     { label: 'Oudste', value: 'date-created' },
+  ];
+
+  doelgroepOptions = [
+    { label: 'Alle resultaten', value: '' },
+    { label: 'Enkel met doelgroep', value: 'true' },
+    { label: 'Enkel zonder doelgroep', value: 'false' },
   ];
 
   @action
@@ -58,5 +65,10 @@ export default class PublicServicesIndexController extends Controller {
   @action
   setSorting(event) {
     this.sort = event.target.value;
+  }
+
+  @action
+  setDoelgroep(event) {
+    this.doelgroep = event.target.value;
   }
 }
