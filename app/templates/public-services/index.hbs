@@ -36,16 +36,20 @@
               </form>
             </div>
             <div class="c-sort-container">
-              <AuSelect
-                @label="Doelgroep:"
-                @selection={{this.doelgroep}}
-                @options={{this.doelgroepOptions}}
-                @onChange={{this.setDoelgroep}} />
-              <AuSelect
-                @label="Gesorteerd op:"
-                @selection={{this.sort}}
-                @options={{this.sortingOptions}}
-                @onChange={{this.setSorting}} />
+              <div>
+                <AuSelect
+                  @label="Doelgroep"
+                  @selection={{this.doelgroep}}
+                  @options={{this.doelgroepOptions}}
+                  @onChange={{this.setDoelgroep}} />
+              </div>
+              <div>
+                <AuSelect
+                  @label="Sorteren"
+                  @selection={{this.sort}}
+                  @options={{this.sortingOptions}}
+                  @onChange={{this.setSorting}} />
+              </div>
             </div>
           </div>
         </div>
