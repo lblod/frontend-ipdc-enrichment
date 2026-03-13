@@ -1,19 +1,26 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 
 export default class PublicServicesEditController extends Controller {
+  @service store;
+  @tracked relevantAdministrativeUnits = this.model.publicService?.relevantAdministrativeUnits ?? [];
+
   get badgeSkin() {
-    if (this.model.publicService?.relevantAdministrativeUnits?.length) {
-      return 'success';
-    } else {
-      return 'grey';
-    }
+    return this.relevantAdministrativeUnits?.length ? 'success' : 'grey';
+  }
+  get icon() {
+    return this.relevantAdministrativeUnits?.length ? 'check' : '';
   }
 
-  get icon() {
-    if (this.model.publicService?.relevantAdministrativeUnits?.length) {
-      return 'check';
-    } else {
-      return '';
-    }
+  @action
+  async onSave() {
+    const refreshed = await this.store.findRecord(
+      'public-service',
+      this.model.publicService.id,
+      { reload: true, include: 'relevant-administrative-units' }
+    );
+    this.model.publicService = refreshed;
   }
 }
