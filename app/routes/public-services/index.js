@@ -38,7 +38,7 @@ export default class PublicServicesIndexRoute extends Route {
         },
         'executing-authority-levels': {
           ':id:': '75e3398e-7a87-48eb-af5f-f0bc81a6a5a4',
-        }
+        },
       },
       page: { size: params.size, number: params.page },
       sort: params.sort,
@@ -54,7 +54,7 @@ export default class PublicServicesIndexRoute extends Route {
         query.filter[':has-no:relevant-administrative-units'] = true;
       }
     }
-    
+
     return this.store.query('public-service', query);
   }
 
