@@ -10,7 +10,13 @@
               <AuBadge @skin={{this.badgeSkin}} @icon={{this.icon}} @size="small"/>
               <h2 class="au-u-h2">{{get this.model.publicService.name "0.content"}}</h2>
             </div>
-            <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
+            <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny">
+              <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
+              {{#if this.model.publicService.datePublished}}
+                <div class="au-u-muted">| Laatst gepubliceerd op {{format-date-time this.model.publicService.datePublished}}</div>
+              {{/if}}
+            </div>
+          
           </Group>
           <Group class="au-u-flex au-u-flex--vertical-center">
             <AuLink
@@ -18,6 +24,7 @@
               @skin="button-secondary"
               @icon="chevron-left"
             > Terug naar overzicht </AuLink>
+            <AuButton @skin="button-secondary" @icon="check" {{on 'click' this.publish}} @loading={{this.isPublishing}}> Publiceren </AuButton>
           </Group>
         </AuToolbar>
          <AuBodyContainer>
