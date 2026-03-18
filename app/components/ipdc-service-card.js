@@ -6,11 +6,11 @@ export default class IpdcServiceCardComponent extends Component {
   @service router;
 
   get badgeSkin() {
-    return this.args.model.datePublished != undefined ? 'success' : 'grey'
+    return this.args.model.datePublished != undefined ? 'success' : 'grey';
   }
 
   get icon() {
-    return this.args.model.datePublished != undefined ? 'check' : ''
+    return this.args.model.datePublished != undefined ? 'check' : '';
   }
 
   @action

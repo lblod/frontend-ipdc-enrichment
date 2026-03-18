@@ -10,7 +10,7 @@ export default class PublicServicesEditController extends Controller {
   @tracked isPublishing = false;
 
   get isPublished() {
-    return this.model.publicService.datePublished != undefined
+    return this.model.publicService.datePublished != undefined;
   }
 
   get badgeSkin() {
@@ -34,9 +34,13 @@ export default class PublicServicesEditController extends Controller {
     try {
       this.model.publicService.datePublished = new Date();
       await this.model.publicService.save();
-      this.toaster.success('Publicatie succesvol.', 'Gepubliceerd', { timeOut: 5000 });
+      this.toaster.success('Publicatie succesvol.', 'Gepubliceerd', {
+        timeOut: 5000,
+      });
     } catch (error) {
-      this.toaster.error('Probeer het later nog eens.', 'Publiceren mislukt', { timeOut: 60000 });
+      this.toaster.error('Probeer het later nog eens.', 'Publiceren mislukt', {
+        timeOut: 60000,
+      });
       throw error;
     } finally {
       this.isPublishing = false;
