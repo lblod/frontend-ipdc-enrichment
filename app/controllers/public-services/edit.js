@@ -8,6 +8,7 @@ export default class PublicServicesEditController extends Controller {
   @service toaster;
 
   @tracked isPublishing = false;
+  @tracked isUnpublishing = false;
 
   get isPublished() {
     return this.model.publicService.datePublished != undefined;
@@ -34,7 +35,7 @@ export default class PublicServicesEditController extends Controller {
     try {
       this.model.publicService.datePublished = new Date();
       await this.model.publicService.save();
-      this.toaster.success('Publicatie succesvol.', 'Gepubliceerd', {
+      this.toaster.success('Aanpassinge zullen vanaf nu automatisch gepubliceerd worden', 'Publiceren is nu actief', {
         timeOut: 5000,
       });
     } catch (error) {
@@ -44,6 +45,25 @@ export default class PublicServicesEditController extends Controller {
       throw error;
     } finally {
       this.isPublishing = false;
+    }
+  }
+
+  @action
+  async unpublish() {
+    this.isUnPublishing = true;
+    try {
+      this.model.publicService.datePublished = null;
+      await this.model.publicService.save();
+      this.toaster.success('De publicatie werd succesvol ingetrokken', 'Publicatie ingetrokken', {
+        timeOut: 5000,
+      });
+    } catch (error) {
+      this.toaster.error('Probeer het later nog eens.', 'Publicatie intrekken mislukt', {
+        timeOut: 60000,
+      });
+      throw error;
+    } finally {
+      this.isUnPublishing = false;
     }
   }
 }

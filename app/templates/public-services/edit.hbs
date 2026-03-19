@@ -13,7 +13,7 @@
             <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny">
               <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
               {{#if this.model.publicService.datePublished}}
-                <div class="au-u-muted">| Laatst gepubliceerd op {{format-date-time this.model.publicService.datePublished}}</div>
+                <div class="au-u-muted">| Publiceren gestart op {{format-date-time this.model.publicService.datePublished}}</div>
               {{/if}}
             </div>
           
@@ -24,7 +24,11 @@
               @skin="button-secondary"
               @icon="chevron-left"
             > Terug naar overzicht </AuLink>
-            <AuButton @skin="button-secondary" @icon="check" {{on 'click' this.publish}} @loading={{this.isPublishing}}> Publiceren </AuButton>
+            {{#if this.model.publicService.datePublished}}
+              <AuButton @skin="naked" @alert="true" {{on 'click' this.unpublish}} @loading={{this.isUnpublishing}}>Publicatie intrekken</AuButton>
+            {{else}}
+              <AuButton @skin="button-secondary" @icon="check" {{on 'click' this.publish}} @loading={{this.isPublishing}}> Publiceren activeren </AuButton>
+            {{/if}}
           </Group>
         </AuToolbar>
          <AuBodyContainer>
