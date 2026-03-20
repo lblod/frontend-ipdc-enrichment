@@ -10,7 +10,13 @@
               <AuBadge @skin={{this.badgeSkin}} @icon={{this.icon}} @size="small"/>
               <h2 class="au-u-h2">{{get this.model.publicService.name "0.content"}}</h2>
             </div>
-            <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
+            <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny">
+              <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
+              {{#if this.model.publicService.datePublished}}
+                <div class="au-u-muted">| Publiceren gestart op {{format-date-time this.model.publicService.datePublished}}</div>
+              {{/if}}
+            </div>
+          
           </Group>
           <Group class="au-u-flex au-u-flex--vertical-center">
             <AuLink
@@ -18,6 +24,11 @@
               @skin="button-secondary"
               @icon="chevron-left"
             > Terug naar overzicht </AuLink>
+            {{#if this.model.publicService.datePublished}}
+              <AuButton @skin="naked" @alert="true" {{on 'click' this.unpublish}} @loading={{this.isUnpublishing}}>Publicatie intrekken</AuButton>
+            {{else}}
+              <AuButton @skin="button-secondary" @icon="check" {{on 'click' this.publish}} @loading={{this.isPublishing}}> Publiceren activeren </AuButton>
+            {{/if}}
           </Group>
         </AuToolbar>
          <AuBodyContainer>
@@ -26,6 +37,7 @@
               <SemanticForms::Instance
                 @instanceId={{this.model.publicService.id}}
                 @form={{this.model.form}}
+                @onSave={{this.onSave}}
               />
             </div>
           </div>
