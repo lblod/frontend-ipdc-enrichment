@@ -6,10 +6,11 @@ export default class PublicServiceModel extends Model {
   @attr productId;
   @attr name;
   @attr description;
-  @attr startDate;
-  @attr endDate;
-  @attr dateCreated;
-  @attr dateModified;
+  @attr('datetime') startDate;
+  @attr('datetime') endDate;
+  @attr('datetime') dateCreated;
+  @attr('datetime') dateModified;
+  @attr('datetime') datePublished;
   @attr versionedSource;
   @attr dutchLanguageVariant;
   @attr needsConversionFromFormalToInformal;
