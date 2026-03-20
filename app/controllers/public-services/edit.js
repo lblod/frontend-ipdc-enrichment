@@ -35,9 +35,13 @@ export default class PublicServicesEditController extends Controller {
     try {
       this.model.publicService.datePublished = new Date();
       await this.model.publicService.save();
-      this.toaster.success('Aanpassinge zullen vanaf nu automatisch gepubliceerd worden', 'Publiceren is nu actief', {
-        timeOut: 5000,
-      });
+      this.toaster.success(
+        'Aanpassinge zullen vanaf nu automatisch gepubliceerd worden',
+        'Publiceren is nu actief',
+        {
+          timeOut: 5000,
+        },
+      );
     } catch (error) {
       this.toaster.error('Probeer het later nog eens.', 'Publiceren mislukt', {
         timeOut: 60000,
@@ -54,13 +58,21 @@ export default class PublicServicesEditController extends Controller {
     try {
       this.model.publicService.datePublished = null;
       await this.model.publicService.save();
-      this.toaster.success('De publicatie werd succesvol ingetrokken', 'Publicatie ingetrokken', {
-        timeOut: 5000,
-      });
+      this.toaster.success(
+        'De publicatie werd succesvol ingetrokken',
+        'Publicatie ingetrokken',
+        {
+          timeOut: 5000,
+        },
+      );
     } catch (error) {
-      this.toaster.error('Probeer het later nog eens.', 'Publicatie intrekken mislukt', {
-        timeOut: 60000,
-      });
+      this.toaster.error(
+        'Probeer het later nog eens.',
+        'Publicatie intrekken mislukt',
+        {
+          timeOut: 60000,
+        },
+      );
       throw error;
     } finally {
       this.isUnPublishing = false;
