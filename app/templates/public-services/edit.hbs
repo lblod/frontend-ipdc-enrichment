@@ -1,52 +1,77 @@
 {{page-title "Public service"}}
 
 <AuMainContainer as |m|>
-    <m.content>
-      <AuBodyContainer>
-        <AuToolbar @border="top" class="head-styling" @skin="tint" as |Group|>
-          <Group class="au-u-flex au-u-flex--column">
-            <div class="au-u-medium">Producten en diensten</div>
-            <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny ">
-              <AuBadge @skin={{this.badgeSkin}} @icon={{this.icon}} @size="small"/>
-              <h2 class="au-u-h2">{{get this.model.publicService.name "0.content"}}</h2>
-            </div>
-            <div class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny">
-              <div class="au-u-muted">ID: {{this.model.publicService.productId}}</div>
-              {{#if this.model.publicService.datePublished}}
-                <div class="au-u-muted">| Publiceren gestart op {{format-date-time this.model.publicService.datePublished}}</div>
-              {{/if}}
-            </div>
-
-          </Group>
-          <Group class="au-u-flex au-u-flex--vertical-center">
-            <AuLink
-              @route="public-services.index"
-              @skin="button-secondary"
-              @icon="chevron-left"
-            > Terug naar overzicht </AuLink>
-            {{#if this.model.publicService.datePublished}}
-              <AuButton @skin="naked" @alert="true" {{on 'click' this.unpublish}} @loading={{this.isUnpublishing}}>Publicatie intrekken</AuButton>
-            {{else}}
-              <AuButton @skin="button-secondary" @icon="check" {{on 'click' this.publish}} @loading={{this.isPublishing}}> Publiceren activeren </AuButton>
-            {{/if}}
-          </Group>
-        </AuToolbar>
-         <AuBodyContainer>
-          <div class="au-c-main-container au-u-padding au-u-flex--column">
-            <div class="au-c-main-container__content au-c-main-container__content--scroll">
-              <AuContent>
-                <SemanticForms::Instance
-                  @instanceId={{this.model.publicService.id}}
-                  @form={{this.model.form}}
-                  @onSave={{this.onSave}}
-                  @formClass="au-u-1-1"
-                />
-              </AuContent>
-            </div>
+  <m.content>
+    <AuBodyContainer>
+      <AuToolbar @border="top" class="head-styling" @skin="tint" as |Group|>
+        <Group class="au-u-flex au-u-flex--column">
+          <div class="au-u-medium">Producten en diensten</div>
+          <div
+            class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny"
+          >
+            <AuBadge
+              @skin={{this.badgeSkin}}
+              @icon={{this.icon}}
+              @size="small"
+            />
+            <h2 class="au-u-h2">{{get
+                this.model.publicService.name
+                "0.content"
+              }}</h2>
           </div>
-        </AuBodyContainer>
+          <div
+            class="au-u-flex au-u-flex--vertical-center au-u-flex--spaced-tiny"
+          >
+            <div class="au-u-muted">ID:
+              {{this.model.publicService.productId}}</div>
+            {{#if this.model.publicService.datePublished}}
+              <div class="au-u-muted">| Publiceren gestart op
+                {{format-date-time
+                  this.model.publicService.datePublished
+                }}</div>
+            {{/if}}
+          </div>
+
+        </Group>
+        <Group class="au-u-flex au-u-flex--vertical-center">
+          <AuLink
+            @route="public-services.index"
+            @skin="button-secondary"
+            @icon="chevron-left"
+          > Terug naar overzicht </AuLink>
+          {{#if this.model.publicService.datePublished}}
+            <AuButton
+              @skin="naked"
+              @alert="true"
+              {{on "click" this.unpublish}}
+              @loading={{this.isUnpublishing}}
+            >Publicatie intrekken</AuButton>
+          {{else}}
+            <AuButton
+              @skin="button-secondary"
+              @icon="check"
+              {{on "click" this.publish}}
+              @loading={{this.isPublishing}}
+            > Publiceren activeren </AuButton>
+          {{/if}}
+        </Group>
+      </AuToolbar>
+      <AuBodyContainer>
+        <div class="au-c-main-container au-u-padding au-u-flex--column">
+          <div
+            class="au-c-main-container__content au-c-main-container__content--scroll"
+          >
+            <SemanticForms::Instance
+              @instanceId={{this.model.publicService.id}}
+              @form={{this.model.form}}
+              @onSave={{this.onSave}}
+              @formClass="au-u-1-1"
+            />
+          </div>
+        </div>
       </AuBodyContainer>
-    </m.content>
-  </AuMainContainer>
+    </AuBodyContainer>
+  </m.content>
+</AuMainContainer>
 
 {{outlet}}
