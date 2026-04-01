@@ -56,18 +56,14 @@
           {{/if}}
         </Group>
       </AuToolbar>
-      <AuBodyContainer>
-        <div class="au-c-main-container au-u-padding au-u-flex--column">
-          <div
-            class="au-c-main-container__content au-c-main-container__content--scroll"
-          >
-            <SemanticForms::Instance
-              @instanceId={{this.model.publicService.id}}
-              @form={{this.model.form}}
-              @onSave={{this.onSave}}
-              @formClass="au-u-1-1"
-            />
-          </div>
+      <AuBodyContainer @scroll={{true}}>
+        <div class="au-u-flex au-u-flex--center au-u-padding">
+          <SemanticForms::Instance
+            @instanceId={{this.model.publicService.id}}
+            @form={{this.model.form}}
+            @onSave={{this.onSave}}
+            @formClass="au-u-1-1"
+          />
         </div>
       </AuBodyContainer>
     </AuBodyContainer>
