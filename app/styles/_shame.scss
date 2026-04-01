@@ -345,3 +345,7 @@
 .au-c-content a:not(.au-c-button) {
   @extend .au-c-link;
 }
+
+.semantic-forms-instance .au-c-input {
+  width: 100%;
+}
