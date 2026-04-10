@@ -45,6 +45,13 @@
               </div>
               <div>
                 <AuSelect
+                  @label="Gepubliceerd"
+                  @selection={{this.gepubliceerd}}
+                  @options={{this.gepubliceerdOptions}}
+                  @onChange={{this.setGepubliceerd}} />
+              </div>
+              <div>
+                <AuSelect
                   @label="Sorteren"
                   @selection={{this.sort}}
                   @options={{this.sortingOptions}}

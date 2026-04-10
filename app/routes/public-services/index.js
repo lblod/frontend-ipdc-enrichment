@@ -21,6 +21,9 @@ export default class PublicServicesIndexRoute extends Route {
     searchTerm: {
       refreshModel: true,
     },
+    gepubliceerd: {
+      refreshModel: true,
+    },
   };
 
   beforeModel(transition) {
@@ -52,6 +55,14 @@ export default class PublicServicesIndexRoute extends Route {
         query.filter[':has:relevant-administrative-units'] = true;
       } else if (params.doelgroep === 'false') {
         query.filter[':has-no:relevant-administrative-units'] = true;
+      }
+    }
+
+    if (params.gepubliceerd !== undefined && params.gepubliceerd !== '') {
+      if (params.gepubliceerd === 'true') {
+        query.filter[':has:date-published'] = true;
+      } else if (params.gepubliceerd === 'false') {
+        query.filter[':has-no:date-published'] = true;
       }
     }
 
