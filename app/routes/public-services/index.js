@@ -61,5 +61,6 @@ export default class PublicServicesIndexRoute extends Route {
   setupController(controller, model) {
     super.setupController(controller, model);
     controller.model = model;
+    controller.searchTermBuffer = controller.searchTerm ?? '';
   }
 }
