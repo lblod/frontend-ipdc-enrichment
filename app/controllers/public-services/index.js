@@ -42,6 +42,7 @@ export default class PublicServicesIndexController extends Controller {
   @action
   search(event) {
     event.preventDefault();
+    this.page = 0;
     this.searchTerm = this.searchTermBuffer;
   }
 
