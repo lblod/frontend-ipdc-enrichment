@@ -17,7 +17,14 @@ export default class PublicServicesIndexController extends Controller {
   @tracked size = 25;
   @tracked sort = '-date-created';
 
-  queryParams = ['page', 'size', 'sort', 'searchTerm', 'doelgroep', 'gepubliceerd'];
+  queryParams = [
+    'page',
+    'size',
+    'sort',
+    'searchTerm',
+    'doelgroep',
+    'gepubliceerd',
+  ];
 
   serviceTypeConceptScheme = CONCEPT_SCHEMES.SERVICE_TYPE_FILTER;
   themeConceptScheme = CONCEPT_SCHEMES.THEME_FILTER;
