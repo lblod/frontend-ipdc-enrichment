@@ -21,6 +21,9 @@ export default class PublicServicesIndexRoute extends Route {
     searchTerm: {
       refreshModel: true,
     },
+    gepubliceerd: {
+      refreshModel: true,
+    },
   };
 
   beforeModel(transition) {
@@ -55,11 +58,20 @@ export default class PublicServicesIndexRoute extends Route {
       }
     }
 
+    if (params.gepubliceerd !== undefined && params.gepubliceerd !== '') {
+      if (params.gepubliceerd === 'true') {
+        query.filter[':has:date-published'] = true;
+      } else if (params.gepubliceerd === 'false') {
+        query.filter[':has-no:date-published'] = true;
+      }
+    }
+
     return this.store.query('public-service', query);
   }
 
   setupController(controller, model) {
     super.setupController(controller, model);
     controller.model = model;
+    controller.searchTermBuffer = controller.searchTerm ?? '';
   }
 }

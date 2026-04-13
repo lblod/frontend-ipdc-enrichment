@@ -12,11 +12,19 @@ export default class PublicServicesIndexController extends Controller {
   @tracked searchTerm;
   @tracked searchTermBuffer;
   @tracked doelgroep;
+  @tracked gepubliceerd;
   @tracked page = 0;
   @tracked size = 25;
   @tracked sort = '-date-created';
 
-  queryParams = ['page', 'size', 'sort', 'searchTerm', 'doelgroep'];
+  queryParams = [
+    'page',
+    'size',
+    'sort',
+    'searchTerm',
+    'doelgroep',
+    'gepubliceerd',
+  ];
 
   serviceTypeConceptScheme = CONCEPT_SCHEMES.SERVICE_TYPE_FILTER;
   themeConceptScheme = CONCEPT_SCHEMES.THEME_FILTER;
@@ -34,6 +42,12 @@ export default class PublicServicesIndexController extends Controller {
     { label: 'Enkel zonder doelgroep', value: 'false' },
   ];
 
+  gepubliceerdOptions = [
+    { label: 'Alle resultaten', value: '' },
+    { label: 'Enkel gepubliceerd', value: 'true' },
+    { label: 'Enkel niet gepubliceerd', value: 'false' },
+  ];
+
   @action
   updateSearchTermBuffer(event) {
     this.searchTermBuffer = event.target.value;
@@ -42,6 +56,7 @@ export default class PublicServicesIndexController extends Controller {
   @action
   search(event) {
     event.preventDefault();
+    this.page = 0;
     this.searchTerm = this.searchTermBuffer;
   }
 
@@ -69,6 +84,13 @@ export default class PublicServicesIndexController extends Controller {
 
   @action
   setDoelgroep(event) {
+    this.page = 0;
     this.doelgroep = event.target.value;
+  }
+
+  @action
+  setGepubliceerd(event) {
+    this.page = 0;
+    this.gepubliceerd = event.target.value;
   }
 }
