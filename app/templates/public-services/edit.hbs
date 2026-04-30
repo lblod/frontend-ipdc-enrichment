@@ -63,7 +63,15 @@
             @form={{this.model.form}}
             @onSave={{this.onSave}}
             @formClass="au-u-1-1"
-          />
+          >
+
+            <:formIsLoading>
+              <AuLoader>Formulier is aan het laden...</AuLoader>
+            </:formIsLoading>
+
+            <:default>
+            </:default>
+          </SemanticForms::Instance>
         </div>
       </AuBodyContainer>
     </AuBodyContainer>
