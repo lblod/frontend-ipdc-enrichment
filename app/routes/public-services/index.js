@@ -46,7 +46,7 @@ export default class PublicServicesIndexRoute extends Route {
 
   async model(params) {
     const filter = {
-      'is-archived': false,
+      isArchived: 'false',
       'executingAuthorityLevels.uuid': '75e3398e-7a87-48eb-af5f-f0bc81a6a5a4',
       'targetAudiences.uuid': '01f7b215-3eb6-4997-8bb7-4c2b2ffcb138',
     };
@@ -58,17 +58,17 @@ export default class PublicServicesIndexRoute extends Route {
 
     if (params.doelgroep !== undefined && params.doelgroep !== '') {
       if (params.doelgroep === 'true') {
-        filter[':has:relevant-administrative-units'] = 't';
+        filter[':has:relevantAdministrativeUnits'] = 't';
       } else if (params.doelgroep === 'false') {
-        filter[':has-no:relevant-administrative-units'] = 't';
+        filter[':has-no:relevantAdministrativeUnits'] = 't';
       }
     }
 
     if (params.gepubliceerd !== undefined && params.gepubliceerd !== '') {
       if (params.gepubliceerd === 'true') {
-        filter[':has:date-published'] = 't';
+        filter[':has:datePublished'] = 't';
       } else if (params.gepubliceerd === 'false') {
-        filter[':has-no:date-published'] = 't';
+        filter[':has-no:datePublished'] = 't';
       }
     }
 
@@ -144,9 +144,12 @@ export default class PublicServicesIndexRoute extends Route {
     );
   }
 
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.model = model;
-    controller.searchTermBuffer = controller.searchTerm ?? '';
+  setupController(controller) {
+    super.setupController(...arguments);
+    controller.themeRecords = this.themeRecords || [];
+    controller.typeRecords = this.typeRecords || [];
+    controller.authorityRecords = this.authorityRecords || [];
+    controller.administrativeUnitRecords = this.administrativeUnitRecords || [];
+    controller.searchTermBuffer = this.searchTerm;
   }
 }

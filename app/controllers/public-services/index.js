@@ -27,18 +27,11 @@ export default class PublicServicesIndexController extends Controller {
   @tracked authorityRecords;
   @tracked administrativeUnitRecords;
 
-  queryParams = [
-    'page',
-    'size',
-    'sort',
-    'searchTerm',
-    'doelgroep',
-    'gepubliceerd',
-  ];
-
   serviceTypeConceptScheme = CONCEPT_SCHEMES.SERVICE_TYPE_FILTER;
   themeConceptScheme = CONCEPT_SCHEMES.THEME_FILTER;
   authorityConceptScheme = CONCEPT_SCHEMES.COMPETENT_AUTHORITY_FILTER;
+  administrativeUnitScheme =
+    CONCEPT_SCHEMES.RELEVANT_ADMINISTRATIVE_UNITS_FILTER;
 
   sortingOptions = [
     { label: 'Relevantie', value: '' },
@@ -130,7 +123,6 @@ export default class PublicServicesIndexController extends Controller {
   updateAdministrativeUnitFilter(administrativeUnits) {
     this.withUpdateSortAndResetPage(() => {
       this.administrativeUnits = administrativeUnits.map((record) => record.id);
-      this.useDefaultAdminUnitFilter = false;
     });
   }
 
