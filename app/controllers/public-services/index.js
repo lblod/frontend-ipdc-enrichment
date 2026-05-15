@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import constants from 'frontend-ipdc-enrichment/config/constants';
+import { isEmpty } from '@ember/utils';
 
 const { CONCEPT_SCHEMES } = constants;
 
@@ -13,22 +14,24 @@ export default class PublicServicesIndexController extends Controller {
   @tracked searchTermBuffer;
   @tracked doelgroep;
   @tracked gepubliceerd;
+  @tracked types = [];
+  @tracked themes = [];
+  @tracked authorities = [];
+  @tracked administrativeUnits = [];
   @tracked page = 0;
   @tracked size = 25;
   @tracked sort = '-date-created';
 
-  queryParams = [
-    'page',
-    'size',
-    'sort',
-    'searchTerm',
-    'doelgroep',
-    'gepubliceerd',
-  ];
+  @tracked themeRecords;
+  @tracked typeRecords;
+  @tracked authorityRecords;
+  @tracked administrativeUnitRecords;
 
   serviceTypeConceptScheme = CONCEPT_SCHEMES.SERVICE_TYPE_FILTER;
   themeConceptScheme = CONCEPT_SCHEMES.THEME_FILTER;
   authorityConceptScheme = CONCEPT_SCHEMES.COMPETENT_AUTHORITY_FILTER;
+  administrativeUnitScheme =
+    CONCEPT_SCHEMES.RELEVANT_ADMINISTRATIVE_UNITS_FILTER;
 
   sortingOptions = [
     { label: 'Relevantie', value: '' },
@@ -56,8 +59,9 @@ export default class PublicServicesIndexController extends Controller {
   @action
   search(event) {
     event.preventDefault();
-    this.page = 0;
-    this.searchTerm = this.searchTermBuffer;
+    this.withUpdateSortAndResetPage(() => {
+      this.searchTerm = this.searchTermBuffer;
+    });
   }
 
   @action
@@ -92,5 +96,59 @@ export default class PublicServicesIndexController extends Controller {
   setGepubliceerd(event) {
     this.page = 0;
     this.gepubliceerd = event.target.value;
+  }
+
+  @action
+  updateThemeFilter(themes) {
+    this.withUpdateSortAndResetPage(() => {
+      this.themes = themes.map((record) => record.id);
+    });
+  }
+
+  @action
+  updateServiceTypeFilter(types) {
+    this.withUpdateSortAndResetPage(() => {
+      this.types = types.map((record) => record.id);
+    });
+  }
+
+  @action
+  updateAuthorityFilter(authorities) {
+    this.withUpdateSortAndResetPage(() => {
+      this.authorities = authorities.map((record) => record.id);
+    });
+  }
+
+  @action
+  updateAdministrativeUnitFilter(administrativeUnits) {
+    this.withUpdateSortAndResetPage(() => {
+      this.administrativeUnits = administrativeUnits.map((record) => record.id);
+    });
+  }
+
+  withUpdateSortAndResetPage(callback) {
+    const isEmptySearch = () => {
+      return (
+        isEmpty(this.searchTerm) &&
+        isEmpty(this.themes) &&
+        isEmpty(this.types) &&
+        isEmpty(this.authorities) &&
+        isEmpty(this.administrativeUnits)
+      );
+    };
+
+    const searchWasEmpty = isEmptySearch();
+    callback();
+    const searchIsPresent = !isEmptySearch();
+
+    if (searchWasEmpty && searchIsPresent) {
+      // User started filering/searching => sort by 'score' by default
+      this.sort = 'score';
+    } else if (!searchWasEmpty && !searchIsPresent && this.sort == 'score') {
+      // User stopped filering/searching => sort by 'newest' by default
+      this.sort = '-date-created';
+    }
+
+    this.setPage(0);
   }
 }

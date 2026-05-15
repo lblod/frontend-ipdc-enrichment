@@ -1,5 +1,7 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
+import search, { langStringResourceFormat } from '../../utils/mu-search';
+import { isPresent } from '@ember/utils';
 
 export default class PublicServicesIndexRoute extends Route {
   @service store;
@@ -24,6 +26,18 @@ export default class PublicServicesIndexRoute extends Route {
     gepubliceerd: {
       refreshModel: true,
     },
+    themes: {
+      refreshModel: true,
+    },
+    types: {
+      refreshModel: true,
+    },
+    authorities: {
+      refreshModel: true,
+    },
+    administrativeUnits: {
+      refreshModel: true,
+    },
   };
 
   beforeModel(transition) {
@@ -31,47 +45,115 @@ export default class PublicServicesIndexRoute extends Route {
   }
 
   async model(params) {
-    const query = {
-      include:
-        'thematic-areas,target-audiences,type,relevant-administrative-units',
-      filter: {
-        'is-archived': false,
-        'target-audiences': {
-          ':id:': '01f7b215-3eb6-4997-8bb7-4c2b2ffcb138',
-        },
-        'executing-authority-levels': {
-          ':id:': '75e3398e-7a87-48eb-af5f-f0bc81a6a5a4',
-        },
-      },
-      page: { size: params.size, number: params.page },
-      sort: params.sort,
+    const filter = {
+      isArchived: 'false',
+      'executingAuthorityLevels.uuid': '75e3398e-7a87-48eb-af5f-f0bc81a6a5a4',
+      'targetAudiences.uuid': '01f7b215-3eb6-4997-8bb7-4c2b2ffcb138',
     };
 
-    if (params.searchTerm) {
-      query.filter.name = params.searchTerm;
-    }
+    this.searchTerm = params.searchTerm;
+    filter[':sqs:name.nl^5'] = isPresent(params.searchTerm)
+      ? params.searchTerm
+      : '*';
+
     if (params.doelgroep !== undefined && params.doelgroep !== '') {
       if (params.doelgroep === 'true') {
-        query.filter[':has:relevant-administrative-units'] = true;
+        filter[':has:relevantAdministrativeUnits'] = 't';
       } else if (params.doelgroep === 'false') {
-        query.filter[':has-no:relevant-administrative-units'] = true;
+        filter[':has-no:relevantAdministrativeUnits'] = 't';
       }
     }
 
     if (params.gepubliceerd !== undefined && params.gepubliceerd !== '') {
       if (params.gepubliceerd === 'true') {
-        query.filter[':has:date-published'] = true;
+        filter[':has:datePublished'] = 't';
       } else if (params.gepubliceerd === 'false') {
-        query.filter[':has-no:date-published'] = true;
+        filter[':has-no:datePublished'] = 't';
       }
     }
 
-    return this.store.query('public-service', query);
+    this.themeRecords = [];
+    if (params.themes.length) {
+      this.themeRecords = await Promise.all(
+        params.themes.map((id) => this.store.findRecord('concept', id)),
+      );
+      filter['thematicAreas.broader.uuid'] = this.themeRecords
+        .map((c) => c.id)
+        .join(',');
+    }
+
+    this.authorityRecords = [];
+    if (params.authorities.length) {
+      this.authorityRecords = await Promise.all(
+        params.authorities.map((id) => this.store.findRecord('concept', id)),
+      );
+      filter['competentAuthority.uuid'] = this.authorityRecords
+        .map((c) => c.id)
+        .join(',');
+    }
+
+    this.typeRecords = [];
+    if (params.types.length) {
+      this.typeRecords = await Promise.all(
+        params.types.map((id) => this.store.findRecord('concept', id)),
+      );
+      filter['type.broader.uuid'] = this.typeRecords.map((c) => c.id).join(',');
+    }
+
+    this.administrativeUnitRecords = [];
+    if (params.administrativeUnits.length) {
+      this.administrativeUnitRecords = await Promise.all(
+        params.administrativeUnits.map((id) =>
+          this.store.findRecord('concept', id),
+        ),
+      );
+      filter[':terms:relevantAdministrativeUnits.uuid.keyword'] =
+        this.administrativeUnitRecords.map((c) => c.id).join(',');
+    }
+
+    return search(
+      'public-services',
+      params.page,
+      params.size,
+      params.sort,
+      filter,
+      ({ id, attributes }) => {
+        const product = attributes;
+        product.id = id;
+        ['name', 'description'].forEach((attr) => {
+          product[attr] = langStringResourceFormat(product[attr]);
+        });
+        [
+          'dateCreated',
+          'dateModified',
+          'startDate',
+          'endDate',
+          'datePublished',
+        ].forEach((attr) => {
+          const dateStr = product[attr];
+          product[attr] = dateStr ? new Date(Date.parse(dateStr)) : null;
+        });
+        [
+          'thematicAreas',
+          'executingAuthorityLevels',
+          'competentAuthorityLevels',
+          'targetAudiences',
+          'relevantAdministrativeUnits',
+        ].forEach((attr) => {
+          const value = product[attr];
+          product[attr] = value ? (Array.isArray(value) ? value : [value]) : [];
+        });
+        return product;
+      },
+    );
   }
 
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.model = model;
-    controller.searchTermBuffer = controller.searchTerm ?? '';
+  setupController(controller) {
+    super.setupController(...arguments);
+    controller.themeRecords = this.themeRecords || [];
+    controller.typeRecords = this.typeRecords || [];
+    controller.authorityRecords = this.authorityRecords || [];
+    controller.administrativeUnitRecords = this.administrativeUnitRecords || [];
+    controller.searchTermBuffer = this.searchTerm;
   }
 }
