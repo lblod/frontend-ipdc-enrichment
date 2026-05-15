@@ -123,12 +123,16 @@ export default class PublicServicesIndexRoute extends Route {
         ['name', 'description'].forEach((attr) => {
           product[attr] = langStringResourceFormat(product[attr]);
         });
-        ['dateCreated', 'dateModified', 'startDate', 'endDate'].forEach(
-          (attr) => {
-            const dateStr = product[attr];
-            product[attr] = dateStr ? new Date(Date.parse(dateStr)) : null;
-          },
-        );
+        [
+          'dateCreated',
+          'dateModified',
+          'startDate',
+          'endDate',
+          'datePublished',
+        ].forEach((attr) => {
+          const dateStr = product[attr];
+          product[attr] = dateStr ? new Date(Date.parse(dateStr)) : null;
+        });
         [
           'thematicAreas',
           'executingAuthorityLevels',
